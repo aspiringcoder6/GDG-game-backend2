@@ -1,0 +1,48 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# VSCode settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# PyCharm settings (if any)
+.idea/
+
+# Logs
+*.log
+
+# Byte-compiled / optimized / DLL files
+*.pyd
+*.dll
+*.so
+*.lib
+*.dylib
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore large model files (download them separately in deployment)
+*.ckpt
+*.pt
+*.pth
+*.h5
+*.task
+*.onnx
+
+# Ignore other binaries
+*.exe
+*.bin
+
+# Ignore test output or temp folders
+output/
+temp/
