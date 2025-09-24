@@ -13,15 +13,22 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 token = os.getenv("HF_TOKEN")
-# Download the model file from the hub
-model_path = hf_hub_download(
-    repo_id="Ninhminhhieu/vgg_64",
-    filename="vgg_64.pt",
-    token=token
-)
+
 
 # Load the model
-model = torch.load(model_path, map_location="cpu")  # or "cuda" if GPU available
+model = None
+
+def get_model():
+    global model
+    if model is None:
+        token = os.getenv("HF_TOKEN")
+        model_path = hf_hub_download(
+            repo_id="Ninhminhhieu/vgg_64",
+            filename="vgg_64.pt",
+            token=token
+        )
+        model = torch.load(model_path, map_location="cpu")
+    return model
 
 app = Flask(__name__)
 CORS(app)
@@ -74,6 +81,7 @@ def torch_predict(model: torch.nn.Module, image: np.ndarray, device: torch.devic
 # --- Flask route ---
 @app.route("/predict", methods=["POST"])
 def predict():
+    model=get_model()
     try:
         if "frame" not in request.files:
             return jsonify({"error": "No file uploaded"}), 400
